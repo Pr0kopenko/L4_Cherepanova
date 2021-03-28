@@ -39,6 +39,8 @@ enum CarAction {
     case roofLowered
 }
 
+//MARK: - Car
+
 class Car {
     let brand: String
     let releaseYear: Int
@@ -104,6 +106,8 @@ class Car {
     }
 
 }
+
+//MARK: - TrunkCar
 
 class TrunkCar: Car {
 
@@ -191,23 +195,9 @@ class SportCar: Car {
         super.init(brand: brand, releaseYear: releaseYear, transmission: transmission, windowsState: windowsState, mileage: mileage)
     }
 
-    override func carChange (action: CarAction) {
+    func roofChange (action: RoofState) {
         switch action {
-        case .openWindows:
-            if windowsState == .open {
-                print("Окна и так открыты")
-            } else {
-                windowsState = .open
-                print("Окна открыты")
-            }
-        case .closeWindows:
-            if windowsState == .closed {
-                print("Окна и так закрыты")
-            } else {
-                windowsState = .closed
-                print("Окна закрыты")
-            }
-        case .roofRaised:
+        case .raised:
             if roofState == .raised {
                 print("Крыша уже поднята,  ничего не изменится")
             } else {
@@ -215,11 +205,14 @@ class SportCar: Car {
                 print("Крыша кабриолета поднята")
             }
 
-        case .roofLowered:
-            roofState = .lowered
-            print("Крыша кабриолета опущена")
-        default:
-            print("Невозможно совершить запрошенное действие для этого автомобиля")
+        case .lowered:
+            if roofState == .lowered {
+                print("Крыша уже опущена, это действие ничего не изменит")
+            } else {
+                roofState = .lowered
+                print("Крыша кабриолета опущена")
+            }
+            
         }
     }
 
@@ -267,8 +260,8 @@ print("Проверим, работает ли наша кабриолетная
 sportCar1.printCarInfo()
 sportCar2.printCarInfo()
 print("_______________")
-sportCar1.carChange(action: .roofRaised)
-sportCar1.carChange(action: .roofRaised)
+sportCar1.roofChange(action: .raised)
+sportCar1.roofChange(action: .raised)
 print("_______________")
 sportCar1.printCarInfo()
 sportCar2.printCarInfo()
